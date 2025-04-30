@@ -1,17 +1,20 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Palindrome: React.FC = () => {
   const [word, setWord] = useState('');
   const [isPalindrome, setIsPalindrome] = useState<boolean | null>(null);
 
+  const cleaned = word.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const reversed = cleaned.split('').reverse().join('');
+
   const checkPalindrome = () => {
-    const cleaned = word.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const reversed = cleaned.split('').reverse().join('');
     setIsPalindrome(cleaned === reversed);
   };
+
   useEffect(() => {
     setIsPalindrome(null);
   }, [word]);
+
   return (
     <div>
       <h2>Pengecek Palindrome</h2>
@@ -35,11 +38,14 @@ const Palindrome: React.FC = () => {
         </button>
       </div>
       {isPalindrome !== null && (
-        <p>
-          {word} {isPalindrome ? '=' : '!='} {word}
-        </p>
+        <>
+          <p>
+            {cleaned} {isPalindrome ? '=' : '!='} {reversed}
+          </p>
+          
+        </>
       )}
-      <p>Hasil: {isPalindrome !== null ? (isPalindrome ? 'Palindrome' : 'Bukan Palindrome') : ' '}</p>
+ <p>Hasil: {isPalindrome !== null ? (isPalindrome ? 'Palindrome' : 'Bukan Palindrome') : ' '}</p>
     </div>
   );
 };
